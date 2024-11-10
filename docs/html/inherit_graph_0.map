@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classkeyvaluestore_1_1KeyValueStore.html" title="Abstract interface for key&#45;value store implementations." alt="" coords="5,46,221,73"/>
+<area shape="rect" id="node2" href="$classkeyvaluestore_1_1MemoryKeyValueStore.html" title="In&#45;memory implementation of KeyValueStore using std::unordered_map." alt="" coords="269,5,469,47"/>
+<area shape="rect" id="node3" href="$classkeyvaluestore_1_1SQLiteKeyValueStore.html" title="SQLite&#45;based implementation of KeyValueStore." alt="" coords="275,71,463,112"/>
+</map>

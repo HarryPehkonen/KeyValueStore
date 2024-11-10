@@ -1,0 +1,5 @@
+<map id="keyvaluestore::KeyValueStore" name="keyvaluestore::KeyValueStore">
+<area shape="rect" id="node1" title="Abstract interface for key&#45;value store implementations." alt="" coords="107,5,323,32"/>
+<area shape="rect" id="node2" href="$classkeyvaluestore_1_1MemoryKeyValueStore.html" title="In&#45;memory implementation of KeyValueStore using std::unordered_map." alt="" coords="5,80,205,121"/>
+<area shape="rect" id="node3" href="$classkeyvaluestore_1_1SQLiteKeyValueStore.html" title="SQLite&#45;based implementation of KeyValueStore." alt="" coords="230,80,418,121"/>
+</map>

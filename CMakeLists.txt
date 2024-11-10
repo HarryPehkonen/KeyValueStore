@@ -57,7 +57,7 @@ if(BUILD_COVERAGE)
             '/usr/*' 
             '${CMAKE_SOURCE_DIR}/tests/*' 
             --output-file coverage.info
-        COMMAND ${GENHTML} coverage.info --output-directory coverage_report
+        COMMAND ${GENHTML} coverage.info --output-directory ${CMAKE_SOURCE_DIR}/coverage_report
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         COMMENT "Generating code coverage report"
     )
@@ -69,7 +69,7 @@ if(BUILD_DOCS)
                 REQUIRED dot
                 OPTIONAL_COMPONENTS mscgen dia)
    
-    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs)
+    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/docs)
     set(DOXYGEN_GENERATE_HTML YES)
     set(DOXYGEN_GENERATE_MAN NO)
     set(DOXYGEN_EXTRACT_ALL YES)
