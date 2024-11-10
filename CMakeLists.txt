@@ -31,21 +31,23 @@ add_compile_options(
     $<$<CONFIG:Release>:-O3>
 )
 
+# Find SQLite3 if SQLite store is enabled
+if(BUILD_SQLITE_STORE)
+    find_package(SQLite3 REQUIRED)
+endif()
+
 # Coverage settings
 if(BUILD_COVERAGE)
     if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
         message(WARNING "Code coverage results with an optimized (non-Debug) build may be misleading")
     endif()
     
-    # Add coverage flags
     add_compile_options(-fprofile-arcs -ftest-coverage)
     link_libraries(gcov)
     
-    # Find lcov
     find_program(LCOV lcov REQUIRED)
     find_program(GENHTML genhtml REQUIRED)
     
-    # Add coverage targets
     add_custom_target(coverage
         COMMAND ${LCOV} --directory . --zerocounters
         COMMAND ctest
@@ -67,7 +69,7 @@ if(BUILD_DOCS)
                 REQUIRED dot
                 OPTIONAL_COMPONENTS mscgen dia)
    
-    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/docs)
+    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs)
     set(DOXYGEN_GENERATE_HTML YES)
     set(DOXYGEN_GENERATE_MAN NO)
     set(DOXYGEN_EXTRACT_ALL YES)
@@ -77,9 +79,27 @@ if(BUILD_DOCS)
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
     
     doxygen_add_docs(docs
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/README.md
+        include
+        README.md
         COMMENT "Generating API documentation with Doxygen"
+    )
+endif()
+
+# SQLite implementation library
+if(BUILD_SQLITE_STORE)
+    add_library(sqlite_store STATIC)
+    target_sources(sqlite_store
+        PRIVATE
+            src/sqlite/SQLiteKeyValueStore.cpp
+    )
+    target_include_directories(sqlite_store
+        PUBLIC
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:include>
+    )
+    target_link_libraries(sqlite_store
+        PUBLIC
+            SQLite::SQLite3
     )
 endif()
 
@@ -109,14 +129,18 @@ if(BUILD_TESTING)
     enable_testing()
     find_package(GTest REQUIRED)
     
-    add_executable(keyvaluestore_tests
-        tests/interface_test.cpp
-        tests/memory_test.cpp
+    add_executable(keyvaluestore_tests)
+    target_sources(keyvaluestore_tests
+        PRIVATE
+            tests/interface_test.cpp
+            tests/memory_test.cpp
+            tests/sqlite_test.cpp
     )
     
     target_link_libraries(keyvaluestore_tests
         PRIVATE
             keyvaluestore
+            $<$<BOOL:${BUILD_SQLITE_STORE}>:sqlite_store>
             GTest::GTest
             GTest::Main
             pthread
@@ -134,6 +158,16 @@ install(TARGETS keyvaluestore
     EXPORT keyvaluestore-targets
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
+
+if(BUILD_SQLITE_STORE)
+    install(TARGETS sqlite_store
+        EXPORT keyvaluestore-targets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    )
+endif()
 
 install(DIRECTORY include/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
@@ -154,7 +188,7 @@ write_basic_package_version_file(
 )
 
 configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/keyvaluestore-config.cmake.in
+    cmake/keyvaluestore-config.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/keyvaluestore-config.cmake
     INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
 )
