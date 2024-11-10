@@ -1,0 +1,15 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/KeyValueStoreTargets.cmake")
+
+# Check if implementations are available
+set(KeyValueStore_HAVE_MEMORY_STORE @BUILD_MEMORY_STORE@)
+set(KeyValueStore_HAVE_SQLITE_STORE @BUILD_SQLITE_STORE@)
+
+# Include dependencies if needed
+if(KeyValueStore_HAVE_SQLITE_STORE)
+    include(CMakeFindDependencyMacro)
+    find_dependency(SQLite3)
+endif()
+
+check_required_components(KeyValueStore)
