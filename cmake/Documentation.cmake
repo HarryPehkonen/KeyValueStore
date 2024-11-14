@@ -4,6 +4,9 @@ function(configure_documentation)
         return()
     endif()
 
+    # Include GNUInstallDirs for CMAKE_INSTALL_DOCDIR
+    include(GNUInstallDirs)
+
     find_package(Doxygen
                 REQUIRED dot
                 OPTIONAL_COMPONENTS mscgen dia)
@@ -11,6 +14,7 @@ function(configure_documentation)
     # Configure Doxygen
     set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs)
     set(DOXYGEN_GENERATE_HTML YES)
+    set(DOXYGEN_HTML_OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/docs")
     set(DOXYGEN_GENERATE_MAN NO)
     set(DOXYGEN_EXTRACT_ALL YES)
     set(DOXYGEN_EXTRACT_PRIVATE YES)

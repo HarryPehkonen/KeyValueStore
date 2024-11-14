@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -48,6 +52,22 @@ $(function() {
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('index.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,7 +86,7 @@ $(function() {
   <div class="headertitle"><div class="title">KeyValueStore Library </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_README"></a> A high-performance, thread-safe key-value store library in C++ that provides both in-memory and SQLite-based persistent storage options. The library supports multiple value types and script-based isolation, making it ideal for applications requiring segregated data storage.</p>
+<div class="textblock"><p ><a class="anchor" id="md__home_harri_Dropbox_code_KeyValueStore_README"></a> A high-performance, thread-safe key-value store library in C++ that provides both in-memory and SQLite-based persistent storage options. The library supports multiple value types and script-based isolation, making it ideal for applications requiring segregated data storage.</p>
 <p ><a href="http://unlicense.org/"><img src="https://img.shields.io/badge/license-Unlicense-blue.svg" alt="License: Unlicense" style="pointer-events: none;" class="inline"/></a></p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Features</h1>
@@ -102,25 +122,203 @@ Installation</h1>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Using CMake FetchContent</h2>
 <p >The simplest way to use this library is to include it directly in your CMake project using FetchContent:</p>
-<div class="fragment"><div class="line">include(FetchContent)</div>
+<div class="fragment"><div class="line"># In your project&#39;s CMakeLists.txt</div>
+<div class="line">cmake_minimum_required(VERSION 3.14)</div>
+<div class="line">project(myproject)</div>
+<div class="line"> </div>
+<div class="line">include(FetchContent)</div>
 <div class="line">FetchContent_Declare(</div>
 <div class="line">    keyvaluestore</div>
-<div class="line">    GIT_REPOSITORY https://github.com/HarryPehkonen/KeyValueStore.git</div>
+<div class="line">    GIT_REPOSITORY https://github.com/yourusername/keyvaluestore.git</div>
 <div class="line">    GIT_TAG main  # or specific tag/commit</div>
 <div class="line">)</div>
 <div class="line">FetchContent_MakeAvailable(keyvaluestore)</div>
 <div class="line"> </div>
-<div class="line"># Link against the library</div>
-<div class="line">target_link_libraries(your_target</div>
-<div class="line">    PRIVATE</div>
-<div class="line">        keyvaluestore::keyvaluestore</div>
-<div class="line">        $&lt;$&lt;BOOL:${KeyValueStore_HAVE_SQLITE_STORE}&gt;:keyvaluestore::sqlite_store&gt;</div>
+<div class="line">add_executable(myapp main.cpp)</div>
+<div class="line">target_link_libraries(myapp PRIVATE keyvaluestore::keyvaluestore)  # for both implementations</div>
+<div class="line"># OR</div>
+<div class="line">target_link_libraries(myapp PRIVATE keyvaluestore::memory)  # for memory-only</div>
+<div class="line"># OR</div>
+<div class="line">target_link_libraries(myapp PRIVATE keyvaluestore::sqlite)  # for sqlite-only</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
+Using CMake find_package</h2>
+<div class="fragment"><div class="line"># First install keyvaluestore on your system:</div>
+<div class="line">git clone https://github.com/yourusername/keyvaluestore.git</div>
+<div class="line">cd keyvaluestore</div>
+<div class="line">mkdir build &amp;&amp; cd build</div>
+<div class="line">cmake ..</div>
+<div class="line">make</div>
+<div class="line">sudo make install</div>
+<div class="line"> </div>
+<div class="line"># Then in your project&#39;s CMakeLists.txt:</div>
+<div class="line">cmake_minimum_required(VERSION 3.14)</div>
+<div class="line">project(myproject)</div>
+<div class="line"> </div>
+<div class="line">find_package(keyvaluestore REQUIRED)</div>
+<div class="line"> </div>
+<div class="line">add_executable(myapp main.cpp)</div>
+<div class="line">target_link_libraries(myapp PRIVATE keyvaluestore::keyvaluestore)  # for both implementations</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
+Using add_subdirectory</h2>
+<p >Alternatively, you can include the library directly in your project using <code>add_subdirectory</code>:</p>
+<div class="fragment"><div class="line"># Project structure:</div>
+<div class="line">myproject/</div>
+<div class="line">├── CMakeLists.txt</div>
+<div class="line">├── main.cpp</div>
+<div class="line">└── extern/</div>
+<div class="line">    └── keyvaluestore/  # clone of your library</div>
+<div class="line"> </div>
+<div class="line"># In your project&#39;s CMakeLists.txt:</div>
+<div class="line">cmake_minimum_required(VERSION 3.14)</div>
+<div class="line">project(myproject)</div>
+<div class="line"> </div>
+<div class="line">add_subdirectory(extern/keyvaluestore)</div>
+<div class="line"> </div>
+<div class="line">add_executable(myapp main.cpp)</div>
+<div class="line">target_link_libraries(myapp PRIVATE keyvaluestore::keyvaluestore)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+Example code</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="MemoryKeyValueStore_8hpp.html">keyvaluestore/MemoryKeyValueStore.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="SQLiteKeyValueStore_8hpp.html">keyvaluestore/SQLiteKeyValueStore.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;variant&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> print_value(<span class="keyword">const</span> std::optional&lt;keyvaluestore::ValueType&gt;&amp; value) {</div>
+<div class="line">    <span class="keywordflow">if</span> (!value) {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;null\n&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">return</span>;</div>
+<div class="line">    }</div>
+<div class="line">    std::visit([](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v) { std::cout &lt;&lt; v &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; }, *value);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordflow">try</span> {</div>
+<div class="line">        <span class="comment">// Using memory store</span></div>
+<div class="line">        <a class="code hl_class" href="classkeyvaluestore_1_1MemoryKeyValueStore.html">keyvaluestore::MemoryKeyValueStore</a> memory_store;</div>
+<div class="line">        memory_store.<a class="code hl_function" href="classkeyvaluestore_1_1MemoryKeyValueStore.html#ab11ed58ff2dd0884130c674b4af2495a">set</a>(1, <span class="stringliteral">&quot;test&quot;</span>, <span class="stringliteral">&quot;Hello from memory!&quot;</span>);</div>
+<div class="line">        print_value(memory_store.<a class="code hl_function" href="classkeyvaluestore_1_1MemoryKeyValueStore.html#aca294e9a015b6b2939437d634aa71ce4">get</a>(1, <span class="stringliteral">&quot;test&quot;</span>));</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// Using SQLite store</span></div>
+<div class="line">        <a class="code hl_class" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a> sqlite_store(<span class="stringliteral">&quot;test.db&quot;</span>);</div>
+<div class="line">        sqlite_store.set(1, <span class="stringliteral">&quot;test&quot;</span>, <span class="stringliteral">&quot;Hello from SQLite!&quot;</span>);</div>
+<div class="line">        print_value(sqlite_store.get(1, <span class="stringliteral">&quot;test&quot;</span>));</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">return</span> 0;</div>
+<div class="line">    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> <a class="code hl_class" href="classkeyvaluestore_1_1KeyValueStoreError.html">keyvaluestore::KeyValueStoreError</a>&amp; e) {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; e.what() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">        <span class="keywordflow">return</span> 1;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="aMemoryKeyValueStore_8hpp_html"><div class="ttname"><a href="MemoryKeyValueStore_8hpp.html">MemoryKeyValueStore.hpp</a></div></div>
+<div class="ttc" id="aSQLiteKeyValueStore_8hpp_html"><div class="ttname"><a href="SQLiteKeyValueStore_8hpp.html">SQLiteKeyValueStore.hpp</a></div></div>
+<div class="ttc" id="aclasskeyvaluestore_1_1KeyValueStoreError_html"><div class="ttname"><a href="classkeyvaluestore_1_1KeyValueStoreError.html">keyvaluestore::KeyValueStoreError</a></div><div class="ttdef"><b>Definition:</b> KeyValueStore.hpp:14</div></div>
+<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html">keyvaluestore::MemoryKeyValueStore</a></div><div class="ttdoc">In-memory implementation of KeyValueStore using std::unordered_map.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:17</div></div>
+<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_ab11ed58ff2dd0884130c674b4af2495a"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#ab11ed58ff2dd0884130c674b4af2495a">keyvaluestore::MemoryKeyValueStore::set</a></div><div class="ttdeci">void set(int script_id, const std::string &amp;key, const ValueType &amp;value) override</div><div class="ttdoc">Sets a value for a given script ID and key.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:40</div></div>
+<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_aca294e9a015b6b2939437d634aa71ce4"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#aca294e9a015b6b2939437d634aa71ce4">keyvaluestore::MemoryKeyValueStore::get</a></div><div class="ttdeci">std::optional&lt; ValueType &gt; get(int script_id, const std::string &amp;key) override</div><div class="ttdoc">Retrieves a value for a given script ID and key.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:60</div></div>
+<div class="ttc" id="aclasskeyvaluestore_1_1SQLiteKeyValueStore_html"><div class="ttname"><a href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></div><div class="ttdoc">SQLite-based implementation of KeyValueStore.</div><div class="ttdef"><b>Definition:</b> SQLiteKeyValueStore.hpp:18</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+Advanced CMake Usage</h2>
+<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.14)</div>
+<div class="line">project(myproject)</div>
+<div class="line"> </div>
+<div class="line"># Add cmake directory to module path</div>
+<div class="line">list(APPEND CMAKE_MODULE_PATH &quot;${CMAKE_CURRENT_SOURCE_DIR}/cmake&quot;)</div>
+<div class="line"> </div>
+<div class="line"># Options</div>
+<div class="line">option(USE_MEMORY_STORE &quot;Use memory-based key-value store&quot; ON)</div>
+<div class="line">option(USE_SQLITE_STORE &quot;Use SQLite-based key-value store&quot; ON)</div>
+<div class="line"> </div>
+<div class="line"># Fetch KeyValueStore</div>
+<div class="line">include(FetchContent)</div>
+<div class="line">FetchContent_Declare(</div>
+<div class="line">    keyvaluestore</div>
+<div class="line">    GIT_REPOSITORY https://github.com/yourusername/keyvaluestore.git</div>
+<div class="line">    GIT_TAG main</div>
+<div class="line">    </div>
+<div class="line">    # Optional: Configure the library build</div>
+<div class="line">    CMAKE_ARGS</div>
+<div class="line">        -DKEYVALUESTORE_BUILD_MEMORY=${USE_MEMORY_STORE}</div>
+<div class="line">        -DKEYVALUESTORE_BUILD_SQLITE=${USE_SQLITE_STORE}</div>
+<div class="line">        -DKEYVALUESTORE_BUILD_TESTS=OFF</div>
+<div class="line">        -DKEYVALUESTORE_BUILD_EXAMPLES=OFF</div>
 <div class="line">)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+<div class="line">FetchContent_MakeAvailable(keyvaluestore)</div>
+<div class="line"> </div>
+<div class="line"># Create main executable</div>
+<div class="line">add_executable(myapp main.cpp)</div>
+<div class="line"> </div>
+<div class="line"># Configure based on options</div>
+<div class="line">if(USE_MEMORY_STORE)</div>
+<div class="line">    target_compile_definitions(myapp PRIVATE USE_MEMORY_STORE)</div>
+<div class="line">endif()</div>
+<div class="line"> </div>
+<div class="line">if(USE_SQLITE_STORE)</div>
+<div class="line">    target_compile_definitions(myapp PRIVATE USE_SQLITE_STORE)</div>
+<div class="line">endif()</div>
+<div class="line"> </div>
+<div class="line"># Link against what we need</div>
+<div class="line">target_link_libraries(myapp </div>
+<div class="line">    PRIVATE</div>
+<div class="line">        $&lt;$&lt;BOOL:${USE_MEMORY_STORE}&gt;:keyvaluestore::memory&gt;</div>
+<div class="line">        $&lt;$&lt;BOOL:${USE_SQLITE_STORE}&gt;:keyvaluestore::sqlite&gt;</div>
+<div class="line">)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
+Configurable main.cpp</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifdef USE_MEMORY_STORE</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="MemoryKeyValueStore_8hpp.html">keyvaluestore/MemoryKeyValueStore.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifdef USE_SQLITE_STORE</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="SQLiteKeyValueStore_8hpp.html">keyvaluestore/SQLiteKeyValueStore.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Factory function to create the appropriate store</span></div>
+<div class="line">std::unique_ptr&lt;keyvaluestore::KeyValueStore&gt; create_store(<span class="keyword">const</span> std::string&amp; type) {</div>
+<div class="line">    <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;memory&quot;</span>) {</div>
+<div class="line"><span class="preprocessor">#ifdef USE_MEMORY_STORE</span></div>
+<div class="line">        <span class="keywordflow">return</span> std::make_unique&lt;keyvaluestore::MemoryKeyValueStore&gt;();</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line">        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Memory store not available in this build&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == <span class="stringliteral">&quot;sqlite&quot;</span>) {</div>
+<div class="line"><span class="preprocessor">#ifdef USE_SQLITE_STORE</span></div>
+<div class="line">        <span class="keywordflow">return</span> std::make_unique&lt;keyvaluestore::SQLiteKeyValueStore&gt;(<span class="stringliteral">&quot;test.db&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line">        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;SQLite store not available in this build&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Unknown store type&quot;</span>);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
+<div class="line">    <span class="keywordflow">try</span> {</div>
+<div class="line">        <span class="comment">// Default to memory store if no argument provided</span></div>
+<div class="line">        std::string store_type = (argc &gt; 1) ? argv[1] : <span class="stringliteral">&quot;memory&quot;</span>;</div>
+<div class="line">        </div>
+<div class="line">        <span class="keyword">auto</span> store = create_store(store_type);</div>
+<div class="line">        store-&gt;set(1, <span class="stringliteral">&quot;test&quot;</span>, <span class="stringliteral">&quot;Hello from &quot;</span> + store_type + <span class="stringliteral">&quot;!&quot;</span>);</div>
+<div class="line">        </div>
+<div class="line">        <span class="keyword">auto</span> value = store-&gt;get(1, <span class="stringliteral">&quot;test&quot;</span>);</div>
+<div class="line">        <span class="keywordflow">if</span> (value) {</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Value: &quot;</span> &lt;&lt; std::get&lt;std::string&gt;(*value) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">        }</div>
+<div class="line">        </div>
+<div class="line">        <span class="keywordflow">return</span> 0;</div>
+<div class="line">    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e) {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Error: &quot;</span> &lt;&lt; e.what() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">        <span class="keywordflow">return</span> 1;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md10"></a>
 Build Configuration</h1>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md11"></a>
 Build Types</h2>
-<p >CMake supports different build types: </p><div class="fragment"><div class="line"># Debug build (includes debug symbols, no optimization)</div>
+<p >CMake supports different build types: </p><div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
+<div class="line"> </div>
+<div class="line"># Debug build (includes debug symbols, no optimization)</div>
 <div class="line">cmake -DCMAKE_BUILD_TYPE=Debug ..</div>
 <div class="line"> </div>
 <div class="line"># Release build (optimized, no debug info)</div>
@@ -128,7 +326,18 @@ Build Types</h2>
 <div class="line"> </div>
 <div class="line"># RelWithDebInfo (optimized, includes debug info)</div>
 <div class="line">cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+<div class="line"> </div>
+<div class="line"># Build with both implementations</div>
+<div class="line">cmake ..</div>
+<div class="line"> </div>
+<div class="line"># Or build with just memory implementation</div>
+<div class="line">cmake -DUSE_SQLITE_STORE=OFF ..</div>
+<div class="line"> </div>
+<div class="line"># Or build with just SQLite implementation</div>
+<div class="line">cmake -DUSE_MEMORY_STORE=OFF -DUSE_SQLITE_STORE=ON ..</div>
+<div class="line"> </div>
+<div class="line">make</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
 Code Coverage</h2>
 <p >To build with code coverage support: </p><div class="fragment"><div class="line"># Configure with coverage enabled (requires Debug build)</div>
 <div class="line">cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_COVERAGE=ON ..</div>
@@ -154,7 +363,7 @@ Code Coverage</h2>
 <div class="line"> </div>
 <div class="line"># Fedora</div>
 <div class="line">sudo dnf install lcov</div>
-</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md13"></a>
 CMake Options</h2>
 <ul>
 <li><code>BUILD_MEMORY_STORE</code>: Build the in-memory implementation (ON by default)</li>
@@ -163,7 +372,7 @@ CMake Options</h2>
 <li><code>BUILD_DOCS</code>: Build documentation (ON by default)</li>
 <li><code>BUILD_COVERAGE</code>: Build with coverage information (OFF by default)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Building from Source</h2>
 <div class="fragment"><div class="line">git clone https://github.com/HarryPehkonen/KeyValueStore.git</div>
 <div class="line">cd KeyValueStore</div>
@@ -171,9 +380,9 @@ Building from Source</h2>
 <div class="line">cmake ..</div>
 <div class="line">make</div>
 <div class="line">sudo make install</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
 Quick Start</h1>
-<h2><a class="anchor" id="autotoc_md11"></a>
+<h2><a class="anchor" id="autotoc_md16"></a>
 Basic Usage</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="MemoryKeyValueStore_8hpp.html">keyvaluestore/MemoryKeyValueStore.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -207,14 +416,10 @@ Basic Usage</h2>
 <div class="line">    <span class="keywordtype">size_t</span> removed = store.<a class="code hl_function" href="classkeyvaluestore_1_1MemoryKeyValueStore.html#ac8fab181ff475398c40285cab6e1a75d">remove_all</a>(1);</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Removed &quot;</span> &lt;&lt; removed &lt;&lt; <span class="stringliteral">&quot; keys&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-<div class="ttc" id="aMemoryKeyValueStore_8hpp_html"><div class="ttname"><a href="MemoryKeyValueStore_8hpp.html">MemoryKeyValueStore.hpp</a></div></div>
-<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html">keyvaluestore::MemoryKeyValueStore</a></div><div class="ttdoc">In-memory implementation of KeyValueStore using std::unordered_map.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:16</div></div>
-<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_a4390c0a9efe6cf84ee80b7ce3ee51fd4"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#a4390c0a9efe6cf84ee80b7ce3ee51fd4">keyvaluestore::MemoryKeyValueStore::remove</a></div><div class="ttdeci">bool remove(int script_id, const std::string &amp;key) override</div><div class="ttdoc">Removes a key-value pair for a given script ID and key.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:100</div></div>
-<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_a7c7c2e603303cc86279de9031ab5191a"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#a7c7c2e603303cc86279de9031ab5191a">keyvaluestore::MemoryKeyValueStore::exists</a></div><div class="ttdeci">bool exists(int script_id, const std::string &amp;key) override</div><div class="ttdoc">Checks if a key exists for a given script ID.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:82</div></div>
-<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_ab11ed58ff2dd0884130c674b4af2495a"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#ab11ed58ff2dd0884130c674b4af2495a">keyvaluestore::MemoryKeyValueStore::set</a></div><div class="ttdeci">void set(int script_id, const std::string &amp;key, const ValueType &amp;value) override</div><div class="ttdoc">Sets a value for a given script ID and key.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:39</div></div>
-<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_ac8fab181ff475398c40285cab6e1a75d"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#ac8fab181ff475398c40285cab6e1a75d">keyvaluestore::MemoryKeyValueStore::remove_all</a></div><div class="ttdeci">size_t remove_all(int script_id) override</div><div class="ttdoc">Removes all key-value pairs for a given script ID.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:117</div></div>
-<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_aca294e9a015b6b2939437d634aa71ce4"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#aca294e9a015b6b2939437d634aa71ce4">keyvaluestore::MemoryKeyValueStore::get</a></div><div class="ttdeci">std::optional&lt; ValueType &gt; get(int script_id, const std::string &amp;key) override</div><div class="ttdoc">Retrieves a value for a given script ID and key.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:59</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
+<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_a4390c0a9efe6cf84ee80b7ce3ee51fd4"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#a4390c0a9efe6cf84ee80b7ce3ee51fd4">keyvaluestore::MemoryKeyValueStore::remove</a></div><div class="ttdeci">bool remove(int script_id, const std::string &amp;key) override</div><div class="ttdoc">Removes a key-value pair for a given script ID and key.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:101</div></div>
+<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_a7c7c2e603303cc86279de9031ab5191a"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#a7c7c2e603303cc86279de9031ab5191a">keyvaluestore::MemoryKeyValueStore::exists</a></div><div class="ttdeci">bool exists(int script_id, const std::string &amp;key) override</div><div class="ttdoc">Checks if a key exists for a given script ID.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:83</div></div>
+<div class="ttc" id="aclasskeyvaluestore_1_1MemoryKeyValueStore_html_ac8fab181ff475398c40285cab6e1a75d"><div class="ttname"><a href="classkeyvaluestore_1_1MemoryKeyValueStore.html#ac8fab181ff475398c40285cab6e1a75d">keyvaluestore::MemoryKeyValueStore::remove_all</a></div><div class="ttdeci">size_t remove_all(int script_id) override</div><div class="ttdoc">Removes all key-value pairs for a given script ID.</div><div class="ttdef"><b>Definition:</b> MemoryKeyValueStore.hpp:118</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md17"></a>
 Using SQLite Backend</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="SQLiteKeyValueStore_8hpp.html">keyvaluestore/SQLiteKeyValueStore.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -245,10 +450,7 @@ Using SQLite Backend</h2>
 <div class="line">    </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aSQLiteKeyValueStore_8hpp_html"><div class="ttname"><a href="SQLiteKeyValueStore_8hpp.html">SQLiteKeyValueStore.hpp</a></div></div>
-<div class="ttc" id="aclasskeyvaluestore_1_1KeyValueStoreError_html"><div class="ttname"><a href="classkeyvaluestore_1_1KeyValueStoreError.html">keyvaluestore::KeyValueStoreError</a></div><div class="ttdef"><b>Definition:</b> KeyValueStore.hpp:14</div></div>
-<div class="ttc" id="aclasskeyvaluestore_1_1SQLiteKeyValueStore_html"><div class="ttname"><a href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></div><div class="ttdoc">SQLite-based implementation of KeyValueStore.</div><div class="ttdef"><b>Definition:</b> SQLiteKeyValueStore.hpp:18</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md18"></a>
 Script Isolation Example</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="MemoryKeyValueStore_8hpp.html">keyvaluestore/MemoryKeyValueStore.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -279,7 +481,7 @@ Script Isolation Example</h2>
 <div class="ttc" id="aclasskeyvaluestore_1_1KeyValueStore_html"><div class="ttname"><a href="classkeyvaluestore_1_1KeyValueStore.html">keyvaluestore::KeyValueStore</a></div><div class="ttdoc">Abstract interface for key-value store implementations.</div><div class="ttdef"><b>Definition:</b> KeyValueStore.hpp:30</div></div>
 <div class="ttc" id="aclasskeyvaluestore_1_1KeyValueStore_html_a2c5804ce6c3c6573ea546167020f3479"><div class="ttname"><a href="classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479">keyvaluestore::KeyValueStore::set</a></div><div class="ttdeci">virtual void set(int script_id, const std::string &amp;key, const ValueType &amp;value)=0</div><div class="ttdoc">Store a value with the given key for a specific script.</div></div>
 <div class="ttc" id="aclasskeyvaluestore_1_1KeyValueStore_html_a32efbf96abe01c54d56706f026150b16"><div class="ttname"><a href="classkeyvaluestore_1_1KeyValueStore.html#a32efbf96abe01c54d56706f026150b16">keyvaluestore::KeyValueStore::get</a></div><div class="ttdeci">virtual std::optional&lt; ValueType &gt; get(int script_id, const std::string &amp;key)=0</div><div class="ttdoc">Retrieve a value by key for a specific script.</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
 Thread-Safe Operations Example</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="MemoryKeyValueStore_8hpp.html">keyvaluestore/MemoryKeyValueStore.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;thread&gt;</span></div>
@@ -309,9 +511,9 @@ Thread-Safe Operations Example</h2>
 <div class="line">        thread.join();</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md20"></a>
 Using in Your CMake Project</h1>
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md21"></a>
 Method 1: FetchContent (Recommended)</h2>
 <div class="fragment"><div class="line">include(FetchContent)</div>
 <div class="line">FetchContent_Declare(</div>
@@ -327,7 +529,7 @@ Method 1: FetchContent (Recommended)</h2>
 <div class="line">        keyvaluestore::keyvaluestore</div>
 <div class="line">        $&lt;$&lt;BOOL:${KeyValueStore_HAVE_SQLITE_STORE}&gt;:keyvaluestore::sqlite_store&gt;</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md22"></a>
 Method 2: Installing the Library</h2>
 <p >If you've installed the library system-wide:</p>
 <div class="fragment"><div class="line">find_package(keyvaluestore REQUIRED)</div>
@@ -338,7 +540,7 @@ Method 2: Installing the Library</h2>
 <div class="line">        keyvaluestore::keyvaluestore</div>
 <div class="line">        $&lt;$&lt;BOOL:${KeyValueStore_HAVE_SQLITE_STORE}&gt;:keyvaluestore::sqlite_store&gt;</div>
 <div class="line">)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md23"></a>
 API Reference</h1>
 <p >The library provides a common interface through the <code>KeyValueStore</code> base class:</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>KeyValueStore {</div>
@@ -352,7 +554,7 @@ API Reference</h1>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> remove_all(<span class="keywordtype">int</span> script_id) = 0;</div>
 <div class="line">};</div>
 <div class="ttc" id="anamespacekeyvaluestore_html_a91a59257992320b302cbdb590d392f95"><div class="ttname"><a href="namespacekeyvaluestore.html#a91a59257992320b302cbdb590d392f95">keyvaluestore::ValueType</a></div><div class="ttdeci">std::variant&lt; std::string, int, double, bool &gt; ValueType</div><div class="ttdef"><b>Definition:</b> KeyValueStore.hpp:11</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
 Key Methods</h2>
 <ul>
 <li><code>set()</code>: Store a value with the given key for a specific script</li>
@@ -361,7 +563,7 @@ Key Methods</h2>
 <li><code>remove()</code>: Remove a key-value pair for a specific script</li>
 <li><code>remove_all()</code>: Remove all key-value pairs for a specific script</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<h1><a class="anchor" id="autotoc_md25"></a>
 Performance Considerations</h1>
 <ul>
 <li>The <code>MemoryKeyValueStore</code> implementation provides the fastest access but doesn't persist data</li>
@@ -373,34 +575,37 @@ Performance Considerations</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md26"></a>
 Thread Safety</h1>
 <p >Both implementations are thread-safe:</p><ul>
 <li><code>MemoryKeyValueStore</code> uses a shared mutex for read-write synchronization</li>
 <li><code>SQLiteKeyValueStore</code> uses SQLite's built-in thread safety with additional mutex protection</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 Error Handling</h1>
 <p >The library uses exceptions for error handling:</p><ul>
 <li>All operations may throw <code>KeyValueStoreError</code> for serious errors</li>
 <li>Non-exceptional conditions (like key not found) use return values</li>
 <li>The SQLite implementation includes detailed error messages from the database</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md23"></a>
+<h1><a class="anchor" id="autotoc_md28"></a>
 Contributing</h1>
 <p >Contributions are welcome! Please feel free to submit a Pull Request. For development, you can clone the repository using either:</p>
 <ul>
 <li>HTTPS: <code>git clone <a href="https://github.com/HarryPehkonen/KeyValueStore.git">https://github.com/HarryPehkonen/KeyValueStore.git</a></code></li>
 <li>SSH: <code>git clone git@github.com:HarryPehkonen/KeyValueStore.git</code></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md24"></a>
+<h1><a class="anchor" id="autotoc_md29"></a>
 License</h1>
 <p >This project is released into the public domain - see the [LICENSE](LICENSE) file for details. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Wed Nov 13 2024 17:56:35 for keyvaluestore by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
 </body>
 </html>

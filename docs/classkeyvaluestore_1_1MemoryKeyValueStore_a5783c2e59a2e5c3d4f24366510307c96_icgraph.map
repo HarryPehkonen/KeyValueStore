@@ -1,0 +1,7 @@
+<map id="keyvaluestore::MemoryKeyValueStore::makeKey" name="keyvaluestore::MemoryKeyValueStore::makeKey">
+<area shape="rect" id="node1" title="Creates a KeyType from a script ID and a string key." alt="" coords="253,104,453,145"/>
+<area shape="rect" id="node2" href="$classkeyvaluestore_1_1MemoryKeyValueStore.html#a7c7c2e603303cc86279de9031ab5191a" title="Checks if a key exists for a given script ID." alt="" coords="5,5,205,47"/>
+<area shape="rect" id="node3" href="$classkeyvaluestore_1_1MemoryKeyValueStore.html#aca294e9a015b6b2939437d634aa71ce4" title="Retrieves a value for a given script ID and key." alt="" coords="5,71,205,112"/>
+<area shape="rect" id="node4" href="$classkeyvaluestore_1_1MemoryKeyValueStore.html#a4390c0a9efe6cf84ee80b7ce3ee51fd4" title="Removes a key&#45;value pair for a given script ID and key." alt="" coords="5,136,205,177"/>
+<area shape="rect" id="node5" href="$classkeyvaluestore_1_1MemoryKeyValueStore.html#ab11ed58ff2dd0884130c674b4af2495a" title="Sets a value for a given script ID and key." alt="" coords="5,201,205,243"/>
+</map>

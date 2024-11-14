@@ -1,4 +1,0 @@
-<map id="keyvaluestore::SQLiteKeyValueStore" name="keyvaluestore::SQLiteKeyValueStore">
-<area shape="rect" id="node1" title="SQLite&#45;based implementation of KeyValueStore." alt="" coords="19,80,207,121"/>
-<area shape="rect" id="node2" href="$classkeyvaluestore_1_1KeyValueStore.html" title="Abstract interface for key&#45;value store implementations." alt="" coords="5,5,221,32"/>
-</map>

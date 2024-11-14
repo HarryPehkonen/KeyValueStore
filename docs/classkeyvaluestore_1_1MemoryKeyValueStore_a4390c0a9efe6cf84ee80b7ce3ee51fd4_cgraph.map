@@ -1,0 +1,4 @@
+<map id="keyvaluestore::MemoryKeyValueStore::remove" name="keyvaluestore::MemoryKeyValueStore::remove">
+<area shape="rect" id="node1" title="Removes a key&#45;value pair for a given script ID and key." alt="" coords="5,5,205,47"/>
+<area shape="rect" id="node2" href="$classkeyvaluestore_1_1MemoryKeyValueStore.html#a5783c2e59a2e5c3d4f24366510307c96" title="Creates a KeyType from a script ID and a string key." alt="" coords="253,5,453,47"/>
+</map>

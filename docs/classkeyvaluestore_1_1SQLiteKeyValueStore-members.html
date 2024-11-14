@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +51,23 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classkeyvaluestore_1_1SQLiteKeyValueStore.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -61,11 +82,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacekeyvaluestore.html">keyvaluestore</a></li><li class="navelem"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">SQLiteKeyValueStore</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">keyvaluestore::SQLiteKeyValueStore Member List</div></div>
 </div><!--header-->
@@ -74,7 +90,7 @@ $(function() {
 <p>This is the complete list of members for <a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#a9b1b8e0d036cfbf7055d6973c4d086b0">db_</a></td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#ab07f322c22a7a9a60c0fc52b01b71e84">deserializeValue</a>(const std::string &amp;value_str, char type_indicator)</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#afde604c20271fe74398b177062b85153">deserializeValue</a>(const std::string &amp;value_str, char type_indicator)</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#ae07e9fc190517e41399eae98fcc99f8e">exists</a>(int script_id, const std::string &amp;key) override</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#abc0667005e6700a7fed36e9f2894df19">get</a>(int script_id, const std::string &amp;key) override</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#aa1058b4420216e506be041192a3f7673">initializeSchema</a>()</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
@@ -86,7 +102,7 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a62dd2cbc3138d0549e1d9fbeb8708443">operator=</a>(KeyValueStore &amp;&amp;)=delete</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html">keyvaluestore::KeyValueStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#ae4f112c90ccb7ec9c185354082a85be1">remove</a>(int script_id, const std::string &amp;key) override</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#a4b7a6fd0fd633d2fe55877667f228191">remove_all</a>(int script_id) override</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#ad1377c0cc05a1905806d664b797a3182">serializeValue</a>(const ValueType &amp;value)</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#abd0263c48a0cde7324053854c28d73aa">serializeValue</a>(const ValueType &amp;value)</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#ac04f175afa2ee34b88741138f2ac6465">set</a>(int script_id, const std::string &amp;key, const ValueType &amp;value) override</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#a623127e8e11d70c95878780789fa0c2a">SQLiteKeyValueStore</a>(const std::string &amp;db_path)</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#ae51d5a3ac6dd937b323aa004824c6691">stmt_exists_</a></td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
@@ -97,9 +113,12 @@ $(function() {
   <tr class="odd"><td class="entry"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a90a65882dde6b4e3e697cd461d3625cf">~KeyValueStore</a>()=default</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html">keyvaluestore::KeyValueStore</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html#aa0f92e24ee2f86b4aa3506d5499c2a3b">~SQLiteKeyValueStore</a>() override</td><td class="entry"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">keyvaluestore::SQLiteKeyValueStore</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Wed Nov 13 2024 17:56:35 for keyvaluestore by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
 </body>
 </html>
