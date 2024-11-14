@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KeyValueStore.hpp"
+#include <mutex>
 #include <shared_mutex>
 #include <unordered_map>
 

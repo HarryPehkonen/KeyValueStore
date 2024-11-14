@@ -34,21 +34,205 @@ A high-performance, thread-safe key-value store library in C++ that provides bot
 The simplest way to use this library is to include it directly in your CMake project using FetchContent:
 
 ```cmake
+# In your project's CMakeLists.txt
+cmake_minimum_required(VERSION 3.14)
+project(myproject)
+
 include(FetchContent)
 FetchContent_Declare(
     keyvaluestore
-    GIT_REPOSITORY https://github.com/HarryPehkonen/KeyValueStore.git
+    GIT_REPOSITORY https://github.com/yourusername/keyvaluestore.git
     GIT_TAG main  # or specific tag/commit
 )
 FetchContent_MakeAvailable(keyvaluestore)
 
-# Link against the library
-target_link_libraries(your_target
+add_executable(myapp main.cpp)
+target_link_libraries(myapp PRIVATE keyvaluestore::keyvaluestore)  # for both implementations
+# OR
+target_link_libraries(myapp PRIVATE keyvaluestore::memory)  # for memory-only
+# OR
+target_link_libraries(myapp PRIVATE keyvaluestore::sqlite)  # for sqlite-only
+```
+
+### Using CMake find_package
+
+```cmake
+# First install keyvaluestore on your system:
+git clone https://github.com/yourusername/keyvaluestore.git
+cd keyvaluestore
+mkdir build && cd build
+cmake ..
+make
+sudo make install
+
+# Then in your project's CMakeLists.txt:
+cmake_minimum_required(VERSION 3.14)
+project(myproject)
+
+find_package(keyvaluestore REQUIRED)
+
+add_executable(myapp main.cpp)
+target_link_libraries(myapp PRIVATE keyvaluestore::keyvaluestore)  # for both implementations
+```
+
+### Using add_subdirectory
+
+Alternatively, you can include the library directly in your project using `add_subdirectory`:
+
+```cmake
+# Project structure:
+myproject/
+├── CMakeLists.txt
+├── main.cpp
+└── extern/
+    └── keyvaluestore/  # clone of your library
+
+# In your project's CMakeLists.txt:
+cmake_minimum_required(VERSION 3.14)
+project(myproject)
+
+add_subdirectory(extern/keyvaluestore)
+
+add_executable(myapp main.cpp)
+target_link_libraries(myapp PRIVATE keyvaluestore::keyvaluestore)
+```
+
+### Example code
+
+```cpp
+#include <keyvaluestore/MemoryKeyValueStore.hpp>
+#include <keyvaluestore/SQLiteKeyValueStore.hpp>
+#include <iostream>
+#include <variant>
+
+void print_value(const std::optional<keyvaluestore::ValueType>& value) {
+    if (!value) {
+        std::cout << "null\n";
+        return;
+    }
+    std::visit([](const auto& v) { std::cout << v << '\n'; }, *value);
+}
+
+int main() {
+    try {
+        // Using memory store
+        keyvaluestore::MemoryKeyValueStore memory_store;
+        memory_store.set(1, "test", "Hello from memory!");
+        print_value(memory_store.get(1, "test"));
+
+        // Using SQLite store
+        keyvaluestore::SQLiteKeyValueStore sqlite_store("test.db");
+        sqlite_store.set(1, "test", "Hello from SQLite!");
+        print_value(sqlite_store.get(1, "test"));
+
+        return 0;
+    } catch (const keyvaluestore::KeyValueStoreError& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return 1;
+    }
+}
+```
+
+### Advanced CMake Usage
+
+```cmake
+cmake_minimum_required(VERSION 3.14)
+project(myproject)
+
+# Add cmake directory to module path
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+# Options
+option(USE_MEMORY_STORE "Use memory-based key-value store" ON)
+option(USE_SQLITE_STORE "Use SQLite-based key-value store" ON)
+
+# Fetch KeyValueStore
+include(FetchContent)
+FetchContent_Declare(
+    keyvaluestore
+    GIT_REPOSITORY https://github.com/yourusername/keyvaluestore.git
+    GIT_TAG main
+    
+    # Optional: Configure the library build
+    CMAKE_ARGS
+        -DKEYVALUESTORE_BUILD_MEMORY=${USE_MEMORY_STORE}
+        -DKEYVALUESTORE_BUILD_SQLITE=${USE_SQLITE_STORE}
+        -DKEYVALUESTORE_BUILD_TESTS=OFF
+        -DKEYVALUESTORE_BUILD_EXAMPLES=OFF
+)
+FetchContent_MakeAvailable(keyvaluestore)
+
+# Create main executable
+add_executable(myapp main.cpp)
+
+# Configure based on options
+if(USE_MEMORY_STORE)
+    target_compile_definitions(myapp PRIVATE USE_MEMORY_STORE)
+endif()
+
+if(USE_SQLITE_STORE)
+    target_compile_definitions(myapp PRIVATE USE_SQLITE_STORE)
+endif()
+
+# Link against what we need
+target_link_libraries(myapp 
     PRIVATE
-        keyvaluestore::keyvaluestore
-        $<$<BOOL:${KeyValueStore_HAVE_SQLITE_STORE}>:keyvaluestore::sqlite_store>
+        $<$<BOOL:${USE_MEMORY_STORE}>:keyvaluestore::memory>
+        $<$<BOOL:${USE_SQLITE_STORE}>:keyvaluestore::sqlite>
 )
 ```
+
+### Configurable main.cpp
+
+```cpp
+#include <iostream>
+#include <memory>
+
+#ifdef USE_MEMORY_STORE
+#include <keyvaluestore/MemoryKeyValueStore.hpp>
+#endif
+
+#ifdef USE_SQLITE_STORE
+#include <keyvaluestore/SQLiteKeyValueStore.hpp>
+#endif
+
+// Factory function to create the appropriate store
+std::unique_ptr<keyvaluestore::KeyValueStore> create_store(const std::string& type) {
+    if (type == "memory") {
+#ifdef USE_MEMORY_STORE
+        return std::make_unique<keyvaluestore::MemoryKeyValueStore>();
+#else
+        throw std::runtime_error("Memory store not available in this build");
+#endif
+    } else if (type == "sqlite") {
+#ifdef USE_SQLITE_STORE
+        return std::make_unique<keyvaluestore::SQLiteKeyValueStore>("test.db");
+#else
+        throw std::runtime_error("SQLite store not available in this build");
+#endif
+    }
+    throw std::runtime_error("Unknown store type");
+}
+
+int main(int argc, char* argv[]) {
+    try {
+        // Default to memory store if no argument provided
+        std::string store_type = (argc > 1) ? argv[1] : "memory";
+        
+        auto store = create_store(store_type);
+        store->set(1, "test", "Hello from " + store_type + "!");
+        
+        auto value = store->get(1, "test");
+        if (value) {
+            std::cout << "Value: " << std::get<std::string>(*value) << '\n';
+        }
+        
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return 1;
+    }
+}```
 
 ## Build Configuration
 
@@ -56,6 +240,8 @@ target_link_libraries(your_target
 
 CMake supports different build types:
 ```bash
+mkdir build && cd build
+
 # Debug build (includes debug symbols, no optimization)
 cmake -DCMAKE_BUILD_TYPE=Debug ..
 
@@ -64,6 +250,17 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 
 # RelWithDebInfo (optimized, includes debug info)
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+
+# Build with both implementations
+cmake ..
+
+# Or build with just memory implementation
+cmake -DUSE_SQLITE_STORE=OFF ..
+
+# Or build with just SQLite implementation
+cmake -DUSE_MEMORY_STORE=OFF -DUSE_SQLITE_STORE=ON ..
+
+make
 ```
 
 ### Code Coverage
