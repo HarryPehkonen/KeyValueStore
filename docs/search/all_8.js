@@ -1,14 +1,6 @@
 var searchData=
 [
-  ['serializevalue_0',['serializeValue',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#abd0263c48a0cde7324053854c28d73aa',1,'keyvaluestore::SQLiteKeyValueStore']]],
-  ['set_1',['set',['../classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479',1,'keyvaluestore::KeyValueStore::set()'],['../classkeyvaluestore_1_1MemoryKeyValueStore.html#ab11ed58ff2dd0884130c674b4af2495a',1,'keyvaluestore::MemoryKeyValueStore::set()'],['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#ac04f175afa2ee34b88741138f2ac6465',1,'keyvaluestore::SQLiteKeyValueStore::set()']]],
-  ['sqlitekeyvaluestore_2',['SQLiteKeyValueStore',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html',1,'keyvaluestore::SQLiteKeyValueStore'],['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#a623127e8e11d70c95878780789fa0c2a',1,'keyvaluestore::SQLiteKeyValueStore::SQLiteKeyValueStore()']]],
-  ['sqlitekeyvaluestore_2ecpp_3',['SQLiteKeyValueStore.cpp',['../SQLiteKeyValueStore_8cpp.html',1,'']]],
-  ['sqlitekeyvaluestore_2ehpp_4',['SQLiteKeyValueStore.hpp',['../SQLiteKeyValueStore_8hpp.html',1,'']]],
-  ['stmt_5fexists_5f_5',['stmt_exists_',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#ae51d5a3ac6dd937b323aa004824c6691',1,'keyvaluestore::SQLiteKeyValueStore']]],
-  ['stmt_5fget_5f_6',['stmt_get_',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#ae4995f426b9a8f60fe8648aa35736179',1,'keyvaluestore::SQLiteKeyValueStore']]],
-  ['stmt_5fremove_5f_7',['stmt_remove_',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#a2c3440fabdc0dbebee39673aeba89e46',1,'keyvaluestore::SQLiteKeyValueStore']]],
-  ['stmt_5fremove_5fall_5f_8',['stmt_remove_all_',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#a20145c37b478ab9646af187434855594',1,'keyvaluestore::SQLiteKeyValueStore']]],
-  ['stmt_5fset_5f_9',['stmt_set_',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#ad07708d83eb2ddd7a086ec9625c4e573',1,'keyvaluestore::SQLiteKeyValueStore']]],
-  ['store_5f_10',['store_',['../classkeyvaluestore_1_1MemoryKeyValueStore.html#a8e6ae6ede79b7db62d035457d9766165',1,'keyvaluestore::MemoryKeyValueStore']]]
+  ['readme_2emd_0',['README.md',['../README_8md.html',1,'']]],
+  ['remove_1',['remove',['../classkeyvaluestore_1_1KeyValueStore.html#afc4ec8e177d8d608eba0ab60f5d0f8de',1,'keyvaluestore::KeyValueStore::remove()'],['../classkeyvaluestore_1_1MemoryKeyValueStore.html#a4390c0a9efe6cf84ee80b7ce3ee51fd4',1,'keyvaluestore::MemoryKeyValueStore::remove()'],['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#ae4f112c90ccb7ec9c185354082a85be1',1,'keyvaluestore::SQLiteKeyValueStore::remove()']]],
+  ['remove_5fall_2',['remove_all',['../classkeyvaluestore_1_1KeyValueStore.html#a85713418f8728a7b2f17f7397aa3b112',1,'keyvaluestore::KeyValueStore::remove_all()'],['../classkeyvaluestore_1_1MemoryKeyValueStore.html#ac8fab181ff475398c40285cab6e1a75d',1,'keyvaluestore::MemoryKeyValueStore::remove_all()'],['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#a4b7a6fd0fd633d2fe55877667f228191',1,'keyvaluestore::SQLiteKeyValueStore::remove_all()']]]
 ];

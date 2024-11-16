@@ -11,18 +11,26 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CompilerOptions)
 include(Options)
 include(Documentation)
-include(Coverage)
-include(Targets)
-include(Testing)
-include(Installation)
-include(Examples)
 
-# Configure everything
+# Configure initial options
 configure_compiler_options()
 configure_build_options()
 configure_documentation()
-configure_coverage()
+
+# Setup targets first
+include(Targets)
 configure_targets()
+
+# Now configure coverage (after targets exist)
+include(Coverage)
+configure_coverage()
+
+# Configure testing (which may need coverage flags)
+include(Testing)
 configure_testing()
+
+# Examples and installation can come last
+include(Examples)
+include(Installation)
 configure_examples()
 configure_installation()

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['serializevalue_0',['serializeValue',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#abd0263c48a0cde7324053854c28d73aa',1,'keyvaluestore::SQLiteKeyValueStore']]],
-  ['set_1',['set',['../classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479',1,'keyvaluestore::KeyValueStore::set()'],['../classkeyvaluestore_1_1MemoryKeyValueStore.html#ab11ed58ff2dd0884130c674b4af2495a',1,'keyvaluestore::MemoryKeyValueStore::set()'],['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#ac04f175afa2ee34b88741138f2ac6465',1,'keyvaluestore::SQLiteKeyValueStore::set(int script_id, const std::string &amp;key, const ValueType &amp;value) override']]],
-  ['sqlitekeyvaluestore_2',['SQLiteKeyValueStore',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#a623127e8e11d70c95878780789fa0c2a',1,'keyvaluestore::SQLiteKeyValueStore']]]
+  ['remove_0',['remove',['../classkeyvaluestore_1_1KeyValueStore.html#afc4ec8e177d8d608eba0ab60f5d0f8de',1,'keyvaluestore::KeyValueStore::remove()'],['../classkeyvaluestore_1_1MemoryKeyValueStore.html#a4390c0a9efe6cf84ee80b7ce3ee51fd4',1,'keyvaluestore::MemoryKeyValueStore::remove()'],['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#ae4f112c90ccb7ec9c185354082a85be1',1,'keyvaluestore::SQLiteKeyValueStore::remove()']]],
+  ['remove_5fall_1',['remove_all',['../classkeyvaluestore_1_1KeyValueStore.html#a85713418f8728a7b2f17f7397aa3b112',1,'keyvaluestore::KeyValueStore::remove_all()'],['../classkeyvaluestore_1_1MemoryKeyValueStore.html#ac8fab181ff475398c40285cab6e1a75d',1,'keyvaluestore::MemoryKeyValueStore::remove_all()'],['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#a4b7a6fd0fd633d2fe55877667f228191',1,'keyvaluestore::SQLiteKeyValueStore::remove_all()']]]
 ];

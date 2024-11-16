@@ -12,6 +12,12 @@ function(configure_targets)
             $<INSTALL_INTERFACE:include>
     )
 
+    # Add coverage flags if enabled
+    if(KEYVALUESTORE_BUILD_COVERAGE)
+        target_compile_options(keyvaluestore PRIVATE -fprofile-arcs -ftest-coverage)
+        target_link_options(keyvaluestore PRIVATE -fprofile-arcs -ftest-coverage)
+    endif()
+
     # SQLite implementation
     if(KEYVALUESTORE_USE_SQLITE)
         find_package(SQLite3 REQUIRED)

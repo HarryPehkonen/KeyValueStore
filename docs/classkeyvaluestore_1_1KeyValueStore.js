@@ -4,6 +4,7 @@ var classkeyvaluestore_1_1KeyValueStore =
     [ "KeyValueStore", "classkeyvaluestore_1_1KeyValueStore.html#a096f6574c4ab6635de0b35b193521653", null ],
     [ "KeyValueStore", "classkeyvaluestore_1_1KeyValueStore.html#a872ef265e951f7b998edc0f295455c2f", null ],
     [ "KeyValueStore", "classkeyvaluestore_1_1KeyValueStore.html#a1e2a95d6ba4e0219b58612a4ebb7f8ca", null ],
+    [ "createInMemory", "classkeyvaluestore_1_1KeyValueStore.html#a6737fe9d146da86bc7c658144a798b2d", null ],
     [ "exists", "classkeyvaluestore_1_1KeyValueStore.html#a7d9bcf5c439776481e39be8ae0b3d4d3", null ],
     [ "get", "classkeyvaluestore_1_1KeyValueStore.html#a32efbf96abe01c54d56706f026150b16", null ],
     [ "operator=", "classkeyvaluestore_1_1KeyValueStore.html#ab8d5e61b89bda2b8ec656b181ee48a27", null ],

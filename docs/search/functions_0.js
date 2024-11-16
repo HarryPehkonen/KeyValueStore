@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['deserializevalue_0',['deserializeValue',['../classkeyvaluestore_1_1SQLiteKeyValueStore.html#afde604c20271fe74398b177062b85153',1,'keyvaluestore::SQLiteKeyValueStore']]]
+  ['createinmemory_0',['createInMemory',['../classkeyvaluestore_1_1KeyValueStore.html#a6737fe9d146da86bc7c658144a798b2d',1,'keyvaluestore::KeyValueStore']]]
 ];

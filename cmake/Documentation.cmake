@@ -1,28 +1,23 @@
-# Documentation configuration
 function(configure_documentation)
     if(NOT KEYVALUESTORE_BUILD_DOCS)
         return()
     endif()
-
-    # Include GNUInstallDirs for CMAKE_INSTALL_DOCDIR
-    include(GNUInstallDirs)
 
     find_package(Doxygen
                 REQUIRED dot
                 OPTIONAL_COMPONENTS mscgen dia)
     
     # Configure Doxygen
-    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs)
+    set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/docs")
     set(DOXYGEN_GENERATE_HTML YES)
-    set(DOXYGEN_HTML_OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/docs")
+    set(DOXYGEN_HTML_OUTPUT "${CMAKE_SOURCE_DIR}/docs")
     set(DOXYGEN_GENERATE_MAN NO)
     set(DOXYGEN_EXTRACT_ALL YES)
     set(DOXYGEN_EXTRACT_PRIVATE YES)
     set(DOXYGEN_EXTRACT_STATIC YES)
     set(DOXYGEN_EXTRACT_PACKAGE YES)
     set(DOXYGEN_RECURSIVE YES)
-    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
-    set(DOXYGEN_PROJECT_LOGO "${CMAKE_CURRENT_SOURCE_DIR}/docs/logo.png")
+    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md")
     set(DOXYGEN_HTML_TIMESTAMP YES)
     set(DOXYGEN_GENERATE_TREEVIEW YES)
     set(DOXYGEN_COLLABORATION_GRAPH YES)
@@ -38,27 +33,26 @@ function(configure_documentation)
     set(DOXYGEN_DOT_GRAPH_MAX_NODES 100)
     set(DOXYGEN_MAX_DOT_GRAPH_DEPTH 0)
     set(DOXYGEN_GENERATE_LEGEND YES)
+
+    # Set input files and directories
+    set(DOXYGEN_INPUT_DIRECTORIES 
+        "${CMAKE_SOURCE_DIR}/include"
+        "${CMAKE_SOURCE_DIR}/src"
+        "${CMAKE_SOURCE_DIR}/README.md"
+    )
     
     # Create Doxygen target
     doxygen_add_docs(docs
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${CMAKE_CURRENT_SOURCE_DIR}/README.md
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        ${DOXYGEN_INPUT_DIRECTORIES}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Generating API documentation with Doxygen"
     )
     
     # Add custom target to clean documentation
     add_custom_target(docs_clean
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${DOXYGEN_OUTPUT_DIRECTORY}
+        COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_SOURCE_DIR}/docs"
         COMMENT "Cleaning documentation..."
     )
-    
-    # Install documentation
-    if(EXISTS "${DOXYGEN_OUTPUT_DIRECTORY}/html")
-        install(DIRECTORY "${DOXYGEN_OUTPUT_DIRECTORY}/html"
-                DESTINATION ${CMAKE_INSTALL_DOCDIR}
-                COMPONENT documentation
-                OPTIONAL)
-    endif()
+
+    message(STATUS "Documentation will be generated in ${CMAKE_SOURCE_DIR}/docs")
 endfunction()

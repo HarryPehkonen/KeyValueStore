@@ -31,35 +31,27 @@ var NAVTREE =
       [ "Installation", "index.html#autotoc_md3", [
         [ "Using CMake FetchContent", "index.html#autotoc_md4", null ],
         [ "Using CMake find_package", "index.html#autotoc_md5", null ],
-        [ "Using add_subdirectory", "index.html#autotoc_md6", null ],
-        [ "Example code", "index.html#autotoc_md7", null ],
-        [ "Advanced CMake Usage", "index.html#autotoc_md8", null ],
-        [ "Configurable main.cpp", "index.html#autotoc_md9", null ]
+        [ "Using add_subdirectory", "index.html#autotoc_md6", null ]
       ] ],
-      [ "Build Configuration", "index.html#autotoc_md10", [
-        [ "Build Types", "index.html#autotoc_md11", null ],
-        [ "Code Coverage", "index.html#autotoc_md12", null ],
-        [ "CMake Options", "index.html#autotoc_md13", null ],
-        [ "Building from Source", "index.html#autotoc_md14", null ]
+      [ "Usage Examples", "index.html#autotoc_md7", [
+        [ "Basic Usage with Memory Store", "index.html#autotoc_md8", null ],
+        [ "Using SQLite Backend", "index.html#autotoc_md9", null ],
+        [ "Script Isolation Example", "index.html#autotoc_md10", null ]
       ] ],
-      [ "Quick Start", "index.html#autotoc_md15", [
-        [ "Basic Usage", "index.html#autotoc_md16", null ],
-        [ "Using SQLite Backend", "index.html#autotoc_md17", null ],
-        [ "Script Isolation Example", "index.html#autotoc_md18", null ],
-        [ "Thread-Safe Operations Example", "index.html#autotoc_md19", null ]
+      [ "Build Configuration", "index.html#autotoc_md11", [
+        [ "CMake Options", "index.html#autotoc_md12", null ],
+        [ "Build Types", "index.html#autotoc_md13", null ],
+        [ "Building Documentation", "index.html#autotoc_md14", null ],
+        [ "Code Coverage", "index.html#autotoc_md15", null ]
       ] ],
-      [ "Using in Your CMake Project", "index.html#autotoc_md20", [
-        [ "Method 1: FetchContent (Recommended)", "index.html#autotoc_md21", null ],
-        [ "Method 2: Installing the Library", "index.html#autotoc_md22", null ]
+      [ "API Reference", "index.html#autotoc_md16", [
+        [ "Key Methods", "index.html#autotoc_md17", null ]
       ] ],
-      [ "API Reference", "index.html#autotoc_md23", [
-        [ "Key Methods", "index.html#autotoc_md24", null ]
-      ] ],
-      [ "Performance Considerations", "index.html#autotoc_md25", null ],
-      [ "Thread Safety", "index.html#autotoc_md26", null ],
-      [ "Error Handling", "index.html#autotoc_md27", null ],
-      [ "Contributing", "index.html#autotoc_md28", null ],
-      [ "License", "index.html#autotoc_md29", null ]
+      [ "Performance Considerations", "index.html#autotoc_md18", null ],
+      [ "Thread Safety", "index.html#autotoc_md19", null ],
+      [ "Error Handling", "index.html#autotoc_md20", null ],
+      [ "Contributing", "index.html#autotoc_md21", null ],
+      [ "License", "index.html#autotoc_md22", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -87,7 +79,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"KeyValueStore_8hpp.html"
+"KeyValueStore_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

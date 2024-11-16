@@ -102,8 +102,8 @@ Inheritance diagram for keyvaluestore::SQLiteKeyValueStore:</div>
 <div class="dyncontent">
 <div class="center"><img src="classkeyvaluestore_1_1SQLiteKeyValueStore__inherit__graph.png" border="0" usemap="#akeyvaluestore_1_1SQLiteKeyValueStore_inherit__map" alt="Inheritance graph"/></div>
 <map name="akeyvaluestore_1_1SQLiteKeyValueStore_inherit__map" id="akeyvaluestore_1_1SQLiteKeyValueStore_inherit__map">
-<area shape="rect" title="SQLite&#45;based implementation of KeyValueStore." alt="" coords="5,527,240,1235"/>
-<area shape="rect" href="classkeyvaluestore_1_1KeyValueStore.html" title="Abstract interface for key&#45;value store implementations." alt="" coords="7,5,238,479"/>
+<area shape="rect" title="SQLite&#45;based implementation of KeyValueStore." alt="" coords="5,571,240,1279"/>
+<area shape="rect" href="classkeyvaluestore_1_1KeyValueStore.html" title="Abstract interface for key&#45;value store implementations." alt="" coords="7,5,238,523"/>
 </map>
 </div>
 <div class="dynheader">
@@ -111,11 +111,11 @@ Collaboration diagram for keyvaluestore::SQLiteKeyValueStore:</div>
 <div class="dyncontent">
 <div class="center"><img src="classkeyvaluestore_1_1SQLiteKeyValueStore__coll__graph.png" border="0" usemap="#akeyvaluestore_1_1SQLiteKeyValueStore_coll__map" alt="Collaboration graph"/></div>
 <map name="akeyvaluestore_1_1SQLiteKeyValueStore_coll__map" id="akeyvaluestore_1_1SQLiteKeyValueStore_coll__map">
-<area shape="rect" title="SQLite&#45;based implementation of KeyValueStore." alt="" coords="319,615,554,1073"/>
-<area shape="rect" href="classkeyvaluestore_1_1KeyValueStore.html" title="Abstract interface for key&#45;value store implementations." alt="" coords="5,5,236,479"/>
-<area shape="rect" title=" " alt="" coords="260,196,459,288"/>
-<area shape="rect" title=" " alt="" coords="482,203,546,281"/>
-<area shape="rect" title=" " alt="" coords="571,189,753,295"/>
+<area shape="rect" title="SQLite&#45;based implementation of KeyValueStore." alt="" coords="319,659,554,1117"/>
+<area shape="rect" href="classkeyvaluestore_1_1KeyValueStore.html" title="Abstract interface for key&#45;value store implementations." alt="" coords="5,5,236,523"/>
+<area shape="rect" title=" " alt="" coords="260,218,459,310"/>
+<area shape="rect" title=" " alt="" coords="482,225,546,303"/>
+<area shape="rect" title=" " alt="" coords="571,211,753,317"/>
 </map>
 </div>
 <table class="memberdecls">
@@ -146,19 +146,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a90a65882dde6b4e3e697cd461d3625cf inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a90a65882dde6b4e3e697cd461d3625cf">~KeyValueStore</a> ()=default</td></tr>
 <tr class="separator:a90a65882dde6b4e3e697cd461d3625cf inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c5804ce6c3c6573ea546167020f3479 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479">set</a> (int script_id, const std::string &amp;key, const <a class="el" href="namespacekeyvaluestore.html#a91a59257992320b302cbdb590d392f95">ValueType</a> &amp;value)=0</td></tr>
-<tr class="memdesc:a2c5804ce6c3c6573ea546167020f3479 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a value with the given key for a specific script.  <a href="classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479">More...</a><br /></td></tr>
+<tr class="memdesc:a2c5804ce6c3c6573ea546167020f3479 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a value for a given script ID and key.  <a href="classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479">More...</a><br /></td></tr>
 <tr class="separator:a2c5804ce6c3c6573ea546167020f3479 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32efbf96abe01c54d56706f026150b16 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memItemLeft" align="right" valign="top">virtual std::optional&lt; <a class="el" href="namespacekeyvaluestore.html#a91a59257992320b302cbdb590d392f95">ValueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a32efbf96abe01c54d56706f026150b16">get</a> (int script_id, const std::string &amp;key)=0</td></tr>
-<tr class="memdesc:a32efbf96abe01c54d56706f026150b16 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a value by key for a specific script.  <a href="classkeyvaluestore_1_1KeyValueStore.html#a32efbf96abe01c54d56706f026150b16">More...</a><br /></td></tr>
 <tr class="separator:a32efbf96abe01c54d56706f026150b16 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d9bcf5c439776481e39be8ae0b3d4d3 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a7d9bcf5c439776481e39be8ae0b3d4d3">exists</a> (int script_id, const std::string &amp;key)=0</td></tr>
-<tr class="memdesc:a7d9bcf5c439776481e39be8ae0b3d4d3 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a key exists for a specific script.  <a href="classkeyvaluestore_1_1KeyValueStore.html#a7d9bcf5c439776481e39be8ae0b3d4d3">More...</a><br /></td></tr>
 <tr class="separator:a7d9bcf5c439776481e39be8ae0b3d4d3 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc4ec8e177d8d608eba0ab60f5d0f8de inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#afc4ec8e177d8d608eba0ab60f5d0f8de">remove</a> (int script_id, const std::string &amp;key)=0</td></tr>
-<tr class="memdesc:afc4ec8e177d8d608eba0ab60f5d0f8de inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a key-value pair for a specific script.  <a href="classkeyvaluestore_1_1KeyValueStore.html#afc4ec8e177d8d608eba0ab60f5d0f8de">More...</a><br /></td></tr>
 <tr class="separator:afc4ec8e177d8d608eba0ab60f5d0f8de inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85713418f8728a7b2f17f7397aa3b112 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a85713418f8728a7b2f17f7397aa3b112">remove_all</a> (int script_id)=0</td></tr>
-<tr class="memdesc:a85713418f8728a7b2f17f7397aa3b112 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all key-value pairs for a specific script.  <a href="classkeyvaluestore_1_1KeyValueStore.html#a85713418f8728a7b2f17f7397aa3b112">More...</a><br /></td></tr>
 <tr class="separator:a85713418f8728a7b2f17f7397aa3b112 inherit pub_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
@@ -195,6 +191,10 @@ Private Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_methods_classkeyvaluestore_1_1KeyValueStore"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classkeyvaluestore_1_1KeyValueStore')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html">keyvaluestore::KeyValueStore</a></td></tr>
+<tr class="memitem:a6737fe9d146da86bc7c658144a798b2d inherit pub_static_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html">KeyValueStore</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a6737fe9d146da86bc7c658144a798b2d">createInMemory</a> ()</td></tr>
+<tr class="memdesc:a6737fe9d146da86bc7c658144a798b2d inherit pub_static_methods_classkeyvaluestore_1_1KeyValueStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an in-memory key-value store.  <a href="classkeyvaluestore_1_1KeyValueStore.html#a6737fe9d146da86bc7c658144a798b2d">More...</a><br /></td></tr>
+<tr class="separator:a6737fe9d146da86bc7c658144a798b2d inherit pub_static_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classkeyvaluestore_1_1KeyValueStore"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classkeyvaluestore_1_1KeyValueStore')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html">keyvaluestore::KeyValueStore</a></td></tr>
 <tr class="memitem:a096f6574c4ab6635de0b35b193521653 inherit pro_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a096f6574c4ab6635de0b35b193521653">KeyValueStore</a> ()=default</td></tr>
 <tr class="separator:a096f6574c4ab6635de0b35b193521653 inherit pro_methods_classkeyvaluestore_1_1KeyValueStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -401,7 +401,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a7d9bcf5c439776481e39be8ae0b3d4d3" title="Check if a key exists for a specific script.">KeyValueStore::exists</a> </p>
+<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a7d9bcf5c439776481e39be8ae0b3d4d3">KeyValueStore::exists</a> </p>
 
 <p>Implements <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a7d9bcf5c439776481e39be8ae0b3d4d3">keyvaluestore::KeyValueStore</a>.</p>
 
@@ -457,7 +457,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a32efbf96abe01c54d56706f026150b16" title="Retrieve a value by key for a specific script.">KeyValueStore::get</a> </p>
+<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a32efbf96abe01c54d56706f026150b16">KeyValueStore::get</a> </p>
 
 <p>Implements <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a32efbf96abe01c54d56706f026150b16">keyvaluestore::KeyValueStore</a>.</p>
 <div class="dynheader">
@@ -565,7 +565,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#afc4ec8e177d8d608eba0ab60f5d0f8de" title="Remove a key-value pair for a specific script.">KeyValueStore::remove</a> </p>
+<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#afc4ec8e177d8d608eba0ab60f5d0f8de">KeyValueStore::remove</a> </p>
 
 <p>Implements <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#afc4ec8e177d8d608eba0ab60f5d0f8de">keyvaluestore::KeyValueStore</a>.</p>
 
@@ -610,7 +610,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a85713418f8728a7b2f17f7397aa3b112" title="Remove all key-value pairs for a specific script.">KeyValueStore::remove_all</a> </p>
+<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a85713418f8728a7b2f17f7397aa3b112">KeyValueStore::remove_all</a> </p>
 
 <p>Implements <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a85713418f8728a7b2f17f7397aa3b112">keyvaluestore::KeyValueStore</a>.</p>
 
@@ -716,7 +716,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479" title="Store a value with the given key for a specific script.">KeyValueStore::set</a> </p>
+<p>@override <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479" title="Sets a value for a given script ID and key.">KeyValueStore::set</a> </p>
 
 <p>Implements <a class="el" href="classkeyvaluestore_1_1KeyValueStore.html#a2c5804ce6c3c6573ea546167020f3479">keyvaluestore::KeyValueStore</a>.</p>
 <div class="dynheader">
@@ -887,8 +887,8 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/harri/Dropbox/code/KeyValueStore/include/keyvaluestore/<a class="el" href="SQLiteKeyValueStore_8hpp_source.html">SQLiteKeyValueStore.hpp</a></li>
-<li>/home/harri/Dropbox/code/KeyValueStore/src/sqlite/<a class="el" href="SQLiteKeyValueStore_8cpp.html">SQLiteKeyValueStore.cpp</a></li>
+<li>include/keyvaluestore/<a class="el" href="SQLiteKeyValueStore_8hpp_source.html">SQLiteKeyValueStore.hpp</a></li>
+<li>src/sqlite/<a class="el" href="SQLiteKeyValueStore_8cpp.html">SQLiteKeyValueStore.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -896,7 +896,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacekeyvaluestore.html">keyvaluestore</a></li><li class="navelem"><a class="el" href="classkeyvaluestore_1_1SQLiteKeyValueStore.html">SQLiteKeyValueStore</a></li>
-    <li class="footer">Generated on Wed Nov 13 2024 17:56:35 for keyvaluestore by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+    <li class="footer">Generated on Sat Nov 16 2024 07:34:16 for keyvaluestore by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
   </ul>
 </div>
 </body>
