@@ -3,15 +3,13 @@ function(configure_examples)
         return()
     endif()
 
-    # Memory example
-    if(KEYVALUESTORE_BUILD_MEMORY)
-        add_executable(memory_example examples/memory_example/main.cpp)
-        target_link_libraries(memory_example PRIVATE keyvaluestore::memory)
-    endif()
+    # Memory example is always available
+    add_executable(memory_example examples/memory_example/main.cpp)
+    target_link_libraries(memory_example PRIVATE keyvaluestore::keyvaluestore)
 
-    # SQLite example
-    if(KEYVALUESTORE_BUILD_SQLITE)
+    # SQLite example only when enabled
+    if(KEYVALUESTORE_USE_SQLITE)
         add_executable(sqlite_example examples/sqlite_example/main.cpp)
-        target_link_libraries(sqlite_example PRIVATE keyvaluestore::sqlite)
+        target_link_libraries(sqlite_example PRIVATE keyvaluestore::keyvaluestore)
     endif()
 endfunction()

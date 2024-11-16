@@ -7,12 +7,21 @@ function(configure_testing)
     find_package(GTest REQUIRED)
     
     add_executable(keyvaluestore_tests)
+    
+    # Always include base tests
     target_sources(keyvaluestore_tests
         PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/tests/interface_test.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/tests/memory_test.cpp
-            $<$<BOOL:${KEYVALUESTORE_BUILD_SQLITE}>:${CMAKE_CURRENT_SOURCE_DIR}/tests/sqlite_test.cpp>
     )
+    
+    # Conditionally include SQLite tests
+    if(KEYVALUESTORE_USE_SQLITE)
+        target_sources(keyvaluestore_tests
+            PRIVATE
+                ${CMAKE_CURRENT_SOURCE_DIR}/tests/sqlite_test.cpp
+        )
+    endif()
     
     target_link_libraries(keyvaluestore_tests
         PRIVATE

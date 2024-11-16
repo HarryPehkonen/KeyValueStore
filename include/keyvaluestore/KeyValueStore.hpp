@@ -4,6 +4,7 @@
 #include <variant>
 #include <optional>
 #include <stdexcept>
+#include <memory>
 
 namespace keyvaluestore {
 
@@ -22,79 +23,78 @@ public:
 
 /**
  * @brief Abstract interface for key-value store implementations.
- * 
- * This class defines the interface for a thread-safe key-value store that supports
- * multiple value types and partitioning by script ID. Different implementations
- * can provide storage in memory, SQLite, or potentially other backends.
+ *
+ * @details The KeyValueStore class provides a common interface for different
+ * storage backend implementations. By default, an in-memory store is always
+ * available. Additional storage backends may be available depending on compile-time
+ * options:
+ *
+ * Available storage backends:
+ * - Memory (always available): Fast, non-persistent in-memory storage
+ * @if KEYVALUESTORE_USE_SQLITE
+ * - SQLite: Persistent storage using SQLite database backend
+ * @endif
+ *
+ * @note Storage backend availability is determined at compile time. Use the
+ * appropriate CMake options to enable or disable specific backends:
+ * - KEYVALUESTORE_USE_SQLITE=ON/OFF: Enable/disable SQLite backend
  */
 class KeyValueStore {
 public:
+    /**
+     * @brief Creates an in-memory key-value store
+     * 
+     * Creates a new instance of a memory-based key-value store. This store type
+     * is always available but does not persist data between program executions.
+     *
+     * @return std::unique_ptr<KeyValueStore> Pointer to the created store
+     */
+    static std::unique_ptr<KeyValueStore> createInMemory();
+
+#ifdef KEYVALUESTORE_USE_SQLITE
+    /**
+     * @brief Creates a SQLite-backed key-value store
+     * 
+     * Creates a new instance of a SQLite-backed key-value store. This store type
+     * provides persistent storage using SQLite as the backend database.
+     *
+     * This function is only available when the library is compiled with
+     * SQLite support (KEYVALUESTORE_USE_SQLITE=ON).
+     * 
+     * @param db_path Path to SQLite database file
+     * @return std::unique_ptr<KeyValueStore> Pointer to the created store
+     * @throws KeyValueStoreError if database operations fail
+     */
+    static std::unique_ptr<KeyValueStore> createSQLite(const std::string& db_path);
+#endif
+
     virtual ~KeyValueStore() = default;
 
     /**
-     * @brief Store a value with the given key for a specific script.
+     * @brief Sets a value for a given script ID and key
      * 
-     * @param script_id Identifier for the calling script/thread
-     * @param key The key under which to store the value
-     * @param value The value to store (can be string, int, double, or bool)
-     * @throws KeyValueStoreError if the operation fails
+     * @param script_id Unique identifier for the script
+     * @param key String key for the value
+     * @param value Value to be stored
+     * @throws KeyValueStoreError if the storage operation fails
      */
     virtual void set(int script_id, 
                     const std::string& key, 
                     const ValueType& value) = 0;
-
-    /**
-     * @brief Retrieve a value by key for a specific script.
-     * 
-     * @param script_id Identifier for the calling script/thread
-     * @param key The key to look up
-     * @return std::optional<ValueType> The value if found, std::nullopt if not found
-     * @throws KeyValueStoreError if the operation fails during lookup
-     */
     virtual std::optional<ValueType> get(int script_id, 
                                        const std::string& key) = 0;
 
-    /**
-     * @brief Check if a key exists for a specific script.
-     * 
-     * This method is potentially more efficient than get() when you only need
-     * to check for existence rather than retrieve the value.
-     * 
-     * @param script_id Identifier for the calling script/thread
-     * @param key The key to check
-     * @return bool True if the key exists, false otherwise
-     * @throws KeyValueStoreError if the operation fails during lookup
-     */
     virtual bool exists(int script_id, 
                        const std::string& key) = 0;
 
-    /**
-     * @brief Remove a key-value pair for a specific script.
-     * 
-     * @param script_id Identifier for the calling script/thread
-     * @param key The key to remove
-     * @return bool True if the key was found and removed, false if the key didn't exist
-     * @throws KeyValueStoreError if the operation fails during removal
-     */
     virtual bool remove(int script_id, 
                        const std::string& key) = 0;
 
-    /**
-     * @brief Remove all key-value pairs for a specific script.
-     * 
-     * This method removes all entries associated with the given script_id.
-     * 
-     * @param script_id Identifier for the calling script/thread
-     * @return size_t The number of entries removed
-     * @throws KeyValueStoreError if the operation fails during removal
-     */
     virtual size_t remove_all(int script_id) = 0;
 
 protected:
-    // Protected constructor to prevent direct instantiation
     KeyValueStore() = default;
     
-    // Prevent copying and moving
     KeyValueStore(const KeyValueStore&) = delete;
     KeyValueStore& operator=(const KeyValueStore&) = delete;
     KeyValueStore(KeyValueStore&&) = delete;

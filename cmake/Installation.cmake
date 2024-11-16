@@ -8,28 +8,15 @@ function(configure_installation)
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
 
-    # Install the targets
+    # Install the library target
     install(
         TARGETS keyvaluestore
         EXPORT keyvaluestore-targets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
-
-    if(KEYVALUESTORE_BUILD_MEMORY)
-        install(
-            TARGETS keyvaluestore_memory
-            EXPORT keyvaluestore-targets
-        )
-    endif()
-
-    if(KEYVALUESTORE_BUILD_SQLITE)
-        install(
-            TARGETS keyvaluestore_sqlite
-            EXPORT keyvaluestore-targets
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        )
-    endif()
 
     # Generate and install package files
     configure_package_config_file(
